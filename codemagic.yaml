@@ -1,4 +1,5 @@
 version: 2.0
+
 workflows:
   ios:
     name: Build and deploy to TestFlight
@@ -7,24 +8,23 @@ workflows:
       xcode: latest    # Ensure you're using the latest Xcode version
     scripts:
       - name: Install Flutter dependencies
+        script: |
+          flutter pub get
       - name: Clean Flutter project
         script: |
           flutter clean
           flutter pub get
       - name: Install CocoaPods
-      - name: Clean CocoaPods cache
         script: |
           sudo gem install cocoapods
+      - name: Clean CocoaPods cache
+        script: |
           pod cache clean --all
           pod repo update
       - name: Install iOS dependencies
-      - name: Install CocoaPods dependencies
         script: |
           cd ios
           pod install --repo-update
-      - name: Clean Flutter project
-        script: |
-          flutter clean
       - name: Ensure Flutter plugin files
         script: |
           echo "Checking .flutter-plugins file"
@@ -39,6 +39,7 @@ workflows:
           xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/ios/iphoneos
     artifacts:
       - build/ios/iphoneos/Runner.ipa  # Make sure to specify .ipa output file
+
   android:
     name: Build and deploy to Play Store
     environment:
