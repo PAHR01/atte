@@ -7,40 +7,50 @@ workflows:
       flutter: stable  # Codemagic automatically uses the stable version
       xcode: latest    # Ensure you're using the latest Xcode version
     scripts:
-    - name: Install Flutter dependencies
+      - name: Install Flutter dependencies
         script: |
           flutter pub get
-    - name: Install Ruby 3.1.0 (or higher)
-    script: |
-      rbenv install 3.1.0
-      rbenv global 3.1.0
+
+      - name: Install Ruby 3.1.0 (or higher)
+        script: |
+          rbenv install 3.1.0
+          rbenv global 3.1.0
+          ruby -v  # Verify Ruby version
+
       - name: Clean Flutter project
         script: |
           flutter clean
           flutter pub get
+
       - name: Install CocoaPods
         script: |
           sudo gem install cocoapods
+          pod --version  # Verify CocoaPods installation
+
       - name: Clean CocoaPods cache
         script: |
           pod cache clean --all
           pod repo update
+
       - name: Install iOS dependencies
         script: |
           cd ios
           pod install --repo-update
+
       - name: Ensure Flutter plugin files
         script: |
           echo "Checking .flutter-plugins file"
           cat .flutter-plugins || echo "No .flutter-plugins file found"
           echo "Checking .flutter-plugins-dependencies file"
           cat .flutter-plugins-dependencies || echo "No .flutter-plugins-dependencies file found"
+
       - name: Build iOS App
         script: |
           flutter build ios --release --no-codesign   # Skip code-signing
           # Ensure correct build path for .ipa generation
           xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/ios/archive/Runner.xcarchive archive
           xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/ios/iphoneos
+
     artifacts:
       - build/ios/iphoneos/Runner.ipa  # Make sure to specify .ipa output file
 
@@ -52,8 +62,10 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
+
       - name: Build APK
         script: |
           flutter build apk --release
+
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
