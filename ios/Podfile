@@ -1,13 +1,19 @@
 platform :ios, '12.0'
 
-# CocoaPods analytics
-install! 'cocoapods', :disable_input_output_paths => true
+# Ensure that your flutter SDK path is correctly set
+flutter_application_path = '../'
+
+load File.join(flutter_application_path, '.flutter-plugins')
+load File.join(flutter_application_path, '.flutter-plugins-dependencies')
 
 target 'Runner' do
   use_frameworks!
-  
-  # Add Flutter-specific dependencies
-  pod 'Flutter', :path => '../.flutter-plugins'
+  use_modular_headers!
 
-  # Other custom dependencies can be added here, if needed
+  # Pods for Runner
+  pod 'Flutter', :path => flutter_application_path
+  pod 'FlutterPluginRegistrant', :path => File.join(flutter_application_path, 'packages', 'flutter_plugin_registrant')
+  
+  # Add your other dependencies here
+  
 end
