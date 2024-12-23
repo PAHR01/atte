@@ -7,7 +7,7 @@ workflows:
       flutter: stable  # Codemagic automatically uses the stable version
       xcode: latest    # Ensure you're using the latest Xcode version
     scripts:
-      - name: Install Flutter dependencies
+    - name: Install Flutter dependencies
         script: |
           flutter pub get
     - name: Install Ruby 3.1.0 (or higher)
