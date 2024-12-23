@@ -5,10 +5,18 @@ workflows:
     name: Build and deploy to TestFlight
     environment:
       flutter: stable  # Codemagic automatically uses the stable version
+      xcode: latest    # Ensure you're using the latest Xcode version
     scripts:
-      - name: Install dependencies
+      - name: Install CocoaPods
         script: |
-          flutter pub get
+          sudo gem install cocoapods
+          pod repo update
+      - name: Install Flutter dependencies
+        script: flutter pub get
+      - name: Install iOS dependencies
+        script: |
+          cd ios
+          pod install
       - name: Run tests
         script: |
           flutter test
@@ -38,3 +46,4 @@ workflows:
 # Custom environment configuration (optional)
 environment:
   flutter: stable  # Use the stable version by default (Codemagic does this automatically)
+  # Additional environment variables can be added if necessary
