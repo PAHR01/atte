@@ -10,6 +10,10 @@ workflows:
       - name: Install Flutter dependencies
         script: |
           flutter pub get
+    - name: Install Ruby 3.1.0 (or higher)
+    script: |
+      rbenv install 3.1.0
+      rbenv global 3.1.0
       - name: Clean Flutter project
         script: |
           flutter clean
