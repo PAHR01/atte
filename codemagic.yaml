@@ -18,7 +18,7 @@ workflows:
       - name: Install iOS dependencies
         script: |
                 cd ios
-                pod install
+                pod install --repo-update
       # Removed Run tests script to skip test execution
       - name: Build iOS App
         script: |
