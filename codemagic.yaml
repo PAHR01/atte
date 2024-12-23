@@ -18,6 +18,15 @@ workflows:
         script: |
           cd ios
           pod install --repo-update
+      - name: Clean Flutter project
+        script: |
+          flutter clean
+      - name: Ensure Flutter plugin files
+        script: |
+          echo "Checking .flutter-plugins file"
+          cat .flutter-plugins || echo "No .flutter-plugins file found"
+          echo "Checking .flutter-plugins-dependencies file"
+          cat .flutter-plugins-dependencies || echo "No .flutter-plugins-dependencies file found"
       - name: Build iOS App
         script: |
           flutter build ios --release --no-codesign   # Skip code-signing
