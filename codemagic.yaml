@@ -4,8 +4,7 @@ workflows:
   ios:
     name: Build and deploy to TestFlight
     environment:
-      flutter: stable
-      sdk: ^3.5.4  # Specify SDK version if needed
+      flutter: stable  # Codemagic automatically uses the stable version
     scripts:
       - name: Install dependencies
         script: |
@@ -18,16 +17,11 @@ workflows:
           flutter build ios --release
     artifacts:
       - build/ios/iphoneos/Runner.app
-    publish:
-      branches:
-        - main
-        - master
-  
+
   android:
     name: Build and deploy to Play Store
     environment:
-      flutter: stable
-      sdk: ^3.5.4
+      flutter: stable  # Codemagic automatically uses the stable version
     scripts:
       - name: Install dependencies
         script: |
@@ -40,12 +34,7 @@ workflows:
           flutter build apk --release
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
-    publish:
-      branches:
-        - main
-        - master
 
 # Custom environment configuration (optional)
 environment:
-  flutter: stable
-  sdk: ^3.5.4
+  flutter: stable  # Use the stable version by default (Codemagic does this automatically)
