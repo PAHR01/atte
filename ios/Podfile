@@ -1,19 +1,17 @@
 platform :ios, '12.0'
 
-# Ensure that your flutter SDK path is correctly set
 flutter_application_path = File.expand_path('..')
-
-load File.join(flutter_application_path, '.flutter-plugins')
-load File.join(flutter_application_path, '.flutter-plugins-dependencies')
 
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # Pods for Runner
-  pod 'Flutter', :path => flutter_application_path
+  # Flutter-specific podspec reference
+  pod 'Flutter', :path => File.join(flutter_application_path, '.ios', 'flutter')
+
+  # Automatically generated plugin registrant
   pod 'FlutterPluginRegistrant', :path => File.join(flutter_application_path, 'packages', 'flutter_plugin_registrant')
-  
-  # Add your other dependencies here
-  
+
+  # Add other dependencies as needed
+
 end
