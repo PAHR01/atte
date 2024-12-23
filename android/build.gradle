@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        google()  // Google's Maven repository for Android dependencies
+        mavenCentral()  // Central repository for other dependencies
+    }
+    dependencies {
+        // Android Gradle Plugin version should be compatible with Gradle version.
+        classpath 'com.android.tools.build:gradle:8.5.2'  // Ensure this version matches with your Gradle version
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'  // Kotlin Gradle Plugin (if you're using Kotlin)
+        classpath 'androidx.biometric:biometric:1.0.1'  // Or the latest version
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
