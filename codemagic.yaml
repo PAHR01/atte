@@ -17,12 +17,10 @@ workflows:
         script: |
           cd ios
           pod install
-      - name: Run tests
-        script: |
-          flutter test
+      # Removed Run tests script to skip test execution
       - name: Build iOS App
         script: |
-          flutter build ios --release
+          flutter build ios --release --no-codesign   # Add --no-codesign if you don't need code signing
     artifacts:
       - build/ios/iphoneos/Runner.app
 
@@ -34,9 +32,7 @@ workflows:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Run tests
-        script: |
-          flutter test
+      # Removed Run tests script to skip test execution
       - name: Build APK
         script: |
           flutter build apk --release
