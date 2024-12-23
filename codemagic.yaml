@@ -1,0 +1,51 @@
+version: 2.0
+
+workflows:
+  ios:
+    name: Build and deploy to TestFlight
+    environment:
+      flutter: stable
+      sdk: ^3.5.4  # Specify SDK version if needed
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Run tests
+        script: |
+          flutter test
+      - name: Build iOS App
+        script: |
+          flutter build ios --release
+    artifacts:
+      - build/ios/iphoneos/Runner.app
+    publish:
+      branches:
+        - main
+        - master
+  
+  android:
+    name: Build and deploy to Play Store
+    environment:
+      flutter: stable
+      sdk: ^3.5.4
+    scripts:
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      - name: Run tests
+        script: |
+          flutter test
+      - name: Build APK
+        script: |
+          flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+    publish:
+      branches:
+        - main
+        - master
+
+# Custom environment configuration (optional)
+environment:
+  flutter: stable
+  sdk: ^3.5.4
