@@ -1,0 +1,13 @@
+platform :ios, '12.0'
+
+# CocoaPods analytics
+install! 'cocoapods', :disable_input_output_paths => true
+
+target 'Runner' do
+  use_frameworks!
+  
+  # Add Flutter-specific dependencies
+  pod 'Flutter', :path => '../.flutter-plugins'
+
+  # Other custom dependencies can be added here, if needed
+end
