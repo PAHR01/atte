@@ -13,10 +13,12 @@ workflows:
           pod repo update
       - name: Install Flutter dependencies
         script: flutter pub get
+                flutter clean
+                flutter build ios
       - name: Install iOS dependencies
         script: |
-          cd ios
-          pod install
+                cd ios
+                pod install
       # Removed Run tests script to skip test execution
       - name: Build iOS App
         script: |
