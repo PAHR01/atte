@@ -2,7 +2,7 @@ version: 2.0
 
 workflows:
   ios:
-    name: Build and deploy to TestFlight
+    name: Build iOS App (without publishing)
     environment:
       flutter: stable  # Codemagic automatically uses the stable version
       xcode: latest    # Ensure you're using the latest Xcode version
@@ -35,7 +35,6 @@ workflows:
       - name: Install iOS dependencies
         script: |
           cd ios
-          # Force pod installation even if Flutter.podspec is missing
           pod install --repo-update --no-integrate  # Install iOS dependencies via CocoaPods, ensure repos are up-to-date
           cd ..  # Return to the root directory
 
@@ -46,7 +45,7 @@ workflows:
           echo "Checking .flutter-plugins-dependencies file"
           cat .flutter-plugins-dependencies || echo "No .flutter-plugins-dependencies file found"
 
-      - name: Build iOS App
+      - name: Build iOS App (without publishing)
         script: |
           flutter build ios --release --no-codesign  # Build iOS release app without code-signing
           # Archive the app using Xcode
@@ -54,7 +53,7 @@ workflows:
           xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/ios/iphoneos
 
     artifacts:
-      - build/ios/iphoneos/Runner.ipa  # Specify .ipa output file
+      - build/ios/iphoneos/Runner.ipa  # Specify .ipa output file (no publishing)
 
   android:
     name: Build and deploy to Play Store
