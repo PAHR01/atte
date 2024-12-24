@@ -28,12 +28,12 @@ post_install do |installer|
     # Some Flutter plugins need this workaround for iOS builds
     if target.name == 'Flutter'
       target.build_configurations.each do |config|
-        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+        config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES' # Ensure proper distribution setup for Flutter
       end
     end
 
     # Optional: Fix for Xcode 12 and above related to use_frameworks and Firebase plugins
-    if target.name.include?('Firebase')
+    if target.name.include?('Firebase') # Ensure Firebase plugins use the correct Swift version
       target.build_configurations.each do |config|
         config.build_settings['SWIFT_VERSION'] = '5.0'  # Ensure the right Swift version is set
       end
@@ -41,7 +41,7 @@ post_install do |installer|
 
     # Ensure all targets are set to the correct iOS deployment target
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'  # Set deployment target to 12.0
     end
   end
 end
