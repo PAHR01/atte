@@ -2,12 +2,24 @@
 <plist version="1.0">
   <dict>
     <key>method</key>
-    <string>app-store</string> <!-- or 'ad-hoc', 'enterprise' depending on your use case -->
+    <string>ad-hoc</string> <!-- Use 'ad-hoc' for ad-hoc distribution -->
+    
+    <key>signingStyle</key>
+    <string>manual</string> <!-- Manual signing mode -->
+    
+    <key>signingCertificate</key>
+    <string>iOS Developer</string> <!-- The certificate used for signing -->
+    
+    <key>provisioningProfileSpecifier</key>
+    <string>YourProvisioningProfileUUID</string> <!-- Provide the UUID of the provisioning profile -->
+    
     <key>teamID</key>
-    <string>001</string> <!-- Your Apple Development Team ID -->
+    <string>YourTeamID</string> <!-- Your Apple Development Team ID -->
+    
     <key>bundleIdentifier</key>
     <string>pan-asia.in-01</string> <!-- Your app's bundle identifier -->
+    
     <key>uploadSymbols</key>
-    <true/>
+    <true/> <!-- Set to true if you want to upload dSYM symbols for crash reporting -->
   </dict>
 </plist>
