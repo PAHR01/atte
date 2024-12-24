@@ -1,3 +1,4 @@
+# Set the minimum iOS version required for the project
 platform :ios, '12.0'
 
 # Set the path for the Flutter SDK and application
@@ -21,7 +22,7 @@ target 'Runner' do
   # Ensure any dependencies that need manual linking are added here, if any
 end
 
-# If you need any post-install actions for CocoaPods, you can add them here
+# Post-install actions for CocoaPods, to handle specific plugin issues or custom configurations
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     # Some Flutter plugins need this workaround for iOS builds
@@ -31,11 +32,16 @@ post_install do |installer|
       end
     end
 
-    # Optional: Fix for Xcode 12 and above related to use_frameworks
-    if target.name.include?('Firebase') # Example for Firebase plugins
+    # Optional: Fix for Xcode 12 and above related to use_frameworks and Firebase plugins
+    if target.name.include?('Firebase')
       target.build_configurations.each do |config|
         config.build_settings['SWIFT_VERSION'] = '5.0'  # Ensure the right Swift version is set
       end
+    end
+
+    # Ensure all targets are set to the correct iOS deployment target
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
     end
   end
 end
