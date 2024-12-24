@@ -30,5 +30,12 @@ post_install do |installer|
         config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
       end
     end
+
+    # Optional: Fix for Xcode 12 and above related to use_frameworks
+    if target.name.include?('Firebase') # Example for Firebase plugins
+      target.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '5.0'  # Ensure the right Swift version is set
+      end
+    end
   end
 end
