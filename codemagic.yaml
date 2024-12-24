@@ -35,7 +35,8 @@ workflows:
       - name: Install iOS dependencies
         script: |
           cd ios
-          pod install --repo-update  # Install iOS dependencies via CocoaPods, ensure repos are up-to-date
+          # Force pod installation even if Flutter.podspec is missing
+          pod install --repo-update --no-integrate  # Install iOS dependencies via CocoaPods, ensure repos are up-to-date
           cd ..  # Return to the root directory
 
       - name: Ensure Flutter plugin files
