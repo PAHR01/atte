@@ -9,7 +9,7 @@ workflows:
     scripts:
       - name: Install Flutter dependencies
         script: |
-          flutter pub get
+          flutter pub get  # Install Flutter dependencies
 
       - name: Install Ruby 3.1.0 (or higher)
         script: |
@@ -19,23 +19,24 @@ workflows:
 
       - name: Clean Flutter project
         script: |
-          flutter clean
-          flutter pub get
+          flutter clean  # Clean Flutter build files
+          flutter pub get  # Re-fetch Flutter dependencies
 
       - name: Install CocoaPods
         script: |
-          sudo gem install cocoapods
+          sudo gem install cocoapods  # Install CocoaPods
           pod --version  # Verify CocoaPods installation
 
       - name: Clean CocoaPods cache
         script: |
-          pod cache clean --all
-          pod repo update
+          pod cache clean --all  # Clear CocoaPods cache
+          pod repo update  # Update pod repositories
 
       - name: Install iOS dependencies
         script: |
           cd ios
-          pod install --repo-update
+          pod install --repo-update  # Install iOS dependencies via CocoaPods, ensure repos are up-to-date
+          cd ..  # Return to the root directory
 
       - name: Ensure Flutter plugin files
         script: |
@@ -46,13 +47,13 @@ workflows:
 
       - name: Build iOS App
         script: |
-          flutter build ios --release --no-codesign   # Skip code-signing
-          # Ensure correct build path for .ipa generation
+          flutter build ios --release --no-codesign  # Build iOS release app without code-signing
+          # Archive the app using Xcode
           xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath build/ios/archive/Runner.xcarchive archive
           xcodebuild -exportArchive -archivePath build/ios/archive/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/ios/iphoneos
 
     artifacts:
-      - build/ios/iphoneos/Runner.ipa  # Make sure to specify .ipa output file
+      - build/ios/iphoneos/Runner.ipa  # Specify .ipa output file
 
   android:
     name: Build and deploy to Play Store
@@ -61,11 +62,11 @@ workflows:
     scripts:
       - name: Install dependencies
         script: |
-          flutter pub get
+          flutter pub get  # Install Flutter dependencies
 
       - name: Build APK
         script: |
-          flutter build apk --release
+          flutter build apk --release  # Build APK for release
 
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
+      - build/app/outputs/flutter-apk/app-release.apk  # Specify APK output file
